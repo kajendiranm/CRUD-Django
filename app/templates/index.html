@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <span><p>Hello {{request.user}}! <a href="{% url 'logout' %}">Logout</a></p></span>
+    
+
+    <br>
+    <hr>
+
+    <form action="create" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name"><br>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email"><br>
+        <label for="place">Place</label>
+        <input type="text" name="place" id="place"><br>
+        <label for="file">Choose a n Image</label>
+        <input type="file" name="file" id="file">
+        <button type="submit">Create</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Place</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.place}}</td>
+                <td><a href="{% url 'update' user.id %}">Update</a></td>
+                <td><a href="{% url 'delete' user.id %}">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
